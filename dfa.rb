@@ -1,3 +1,28 @@
+# State machines made simple. Here is an example. Read more in the DFA class
+# documentation.
+#       d = DFA.new('A', ['A','C'])
+#       d.transition do |s,a|
+#         ss = case [s, a]
+#              when ['A', 0]: 'B'
+#              when ['A', 1]: 'C'
+#              when ['B', 0]: 'B'
+#              when ['B', 1]: 'C'
+#              when ['C', 0]: 'D'
+#              when ['C', 1]: 'C'
+#              when ['D', 0]: 'A'
+#              when ['D', 1]: 'C'
+#              else raise "Invalid transition (#{s}, #{a})"
+#              end
+#         print ss
+#         ss
+#       end
+#       
+#       ary = [0,0,0,1,1,1,0,1,1,1,0,0].map do |a|
+#         d.eat a
+#       end
+#       puts
+#       p ary
+
 # A deterministic finite automata is defined as: (S,E,d,s0,F)
 # where S is the set of states, E is the input alphabet, 
 # d is the transition function (d: S x E -> S), s0 is the initial state, and F
@@ -45,28 +70,27 @@ class DFA
   end
 end
 
+if __FILE__ == $0
+  d = DFA.new('A', ['A','C'])
+  d.transition do |s,a|
+    ss = case [s, a]
+         when ['A', 0]: 'B'
+         when ['A', 1]: 'C'
+         when ['B', 0]: 'B'
+         when ['B', 1]: 'C'
+         when ['C', 0]: 'D'
+         when ['C', 1]: 'C'
+         when ['D', 0]: 'A'
+         when ['D', 1]: 'C'
+         else raise "Invalid transition (#{s}, #{a})"
+         end
+    print ss
+    ss
+  end
 
-# usage case
-d = DFA.new('A')
-d.transition do |s,a|
-  ss = case [s, a]
-       when ['A', 0]: 'B'
-       when ['A', 1]: 'C'
-       when ['B', 0]: 'B'
-       when ['B', 1]: 'C'
-       when ['C', 0]: 'D'
-       when ['C', 1]: 'C'
-       when ['D', 0]: 'A'
-       when ['D', 1]: 'C'
-       else raise "Invalid transition (#{s}, #{a})"
-       end
-  puts ss
-  ss
+  ary = [0,0,0,1,1,1,0,1,1,1,0,0].map do |a|
+    d.eat a
+  end
+  puts
+  p ary
 end
-d.finals = ['A','C']
-
-# "test"
-ary = [0,0,0,1,1,1,0,1,1,1,0,0].map do |a|
-  d.eat a
-end
-p ary
