@@ -48,6 +48,7 @@ class DFA
   def initialize(s0, finals=[])
     @start = s0
     @state = @start
+    @finals = finals
   end
 
   # Given an input symbol, transition the state machine according to the return
