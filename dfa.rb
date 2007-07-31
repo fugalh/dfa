@@ -28,11 +28,10 @@ class DFA
   # Given an input symbol, transition the state machine according to the return
   # value of d, and return true if the now-current state is a final state, or
   # false otherwise.
-  def transition(a)
+  def eat(a)
     @state = @d.call(@state,a)
     final?
   end
-  alias :eat :transition
 
   # Is the current state a final state?
   def final?
@@ -40,8 +39,8 @@ class DFA
   end
 
   # Syntactic sugar for defining d. The block will be called with the current
-  # state and input when transition(a) is called.
-  def on_transition(&block)
+  # state and input when eat(a) is called.
+  def transition(&block)
     @d = block
   end
 end
@@ -49,7 +48,7 @@ end
 
 # usage case
 d = DFA.new('A')
-d.on_transition do |s,a|
+d.transition do |s,a|
   ss = case [s, a]
        when ['A', 0]: 'B'
        when ['A', 1]: 'C'
@@ -68,6 +67,6 @@ d.finals = ['A','C']
 
 # "test"
 ary = [0,0,0,1,1,1,0,1,1,1,0,0].map do |a|
-  d.transition a
+  d.eat a
 end
 p ary
