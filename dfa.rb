@@ -22,6 +22,8 @@
 #       end
 #       puts
 #       p ary
+#
+# Download/contribute at GitHub[http://github.com/fugalh/dfa].
 
 # A deterministic finite automata is defined as: (S,E,d,s0,F)
 # where S is the set of states, E is the input alphabet, 
